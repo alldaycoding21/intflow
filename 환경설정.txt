@@ -1,0 +1,2 @@
+tracker01(tensorflow-gpu)
+멘토가 해준 세팅

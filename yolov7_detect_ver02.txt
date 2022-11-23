@@ -1,0 +1,83 @@
+python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.1 --source 1min.mp4 --save-txt --save-conf --device 0,1 --name test --augment && 
+
+
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./video_smaple/realmonitor_20221118_155620_02.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_real_620_02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./video_smaple/realmonitor_20221118_155620_03.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_real_620_03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./video_smaple/realmonitor_20221118_155620.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_real_620  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./video_smaple/realmonitor_20221118_155621_02.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_real_621_02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./video_smaple/realmonitor_20221118_155621_03.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_real_621_03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./video_smaple/realmonitor_20221118_155621.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_real_621  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./video_smaple/realmonitor_20221118_155622_02.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_real_622_02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./video_smaple/realmonitor_20221118_155622_03.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_real_622_03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./video_smaple/realmonitor_20221118_155622.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_real_622  --augment && 
+
+
+
+
+
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch1_2022072519_003.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch01  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch2_2022072519_010.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch3_2022072519_016.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch4_2022072519_021.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch04  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch5_2022072519_028.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch05  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch6_2022072519_035.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch06  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch7_2022072519_042.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch07  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch8_2022072519_049.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch08  --augment && 
+
+
+
+
+
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch1_2022072519_003.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch01  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch2_2022072519_010.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch3_2022072519_016.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch4_2022072519_021.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch04  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch5_2022072519_028.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch05  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch6_2022072519_035.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch06  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch7_2022072519_042.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch07  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch8_2022072519_049.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch08  --augment && 
+
+python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch1_2022072519_003.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch01  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch2_2022072519_010.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch3_2022072519_016.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch4_2022072519_021.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch04  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch5_2022072519_028.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch05  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch6_2022072519_035.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch06  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch7_2022072519_042.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch07  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch8_2022072519_049.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch08  --augment && 
+
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch1_2022072519_003.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch01  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch2_2022072519_010.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch3_2022072519_016.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch4_2022072519_021.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch04  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch5_2022072519_028.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch05  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch6_2022072519_035.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch06  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch7_2022072519_042.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch07  --augment && 
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch8_2022072519_049.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch08  --augment && 
+
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch1_2022072519_003.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch01  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch2_2022072519_010.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch3_2022072519_016.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch4_2022072519_021.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch04  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch5_2022072519_028.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch05  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch6_2022072519_035.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch06  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch7_2022072519_042.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch07  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch8_2022072519_049.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch08  --augment && 
+
+python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch1_2022072519_003.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch01  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch2_2022072519_010.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch3_2022072519_016.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch4_2022072519_021.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch04  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch5_2022072519_028.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch05  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch6_2022072519_035.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch06  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch7_2022072519_042.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch07  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch8_2022072519_049.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch08  --augment && 
+
+python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch1_2022072519_003.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch01  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch2_2022072519_010.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch02  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch3_2022072519_016.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch03  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch4_2022072519_021.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch04  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch5_2022072519_028.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch05  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch6_2022072519_035.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch06  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch7_2022072519_042.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch07  --augment && 
+python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.1 --source ./videos/cowfarmB_ch8_2022072519_049.mp4 --save-txt --save-conf --device 0,1 --name yolov7_p6_d6_ch08  --augment

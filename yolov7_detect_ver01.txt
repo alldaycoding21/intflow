@@ -1,0 +1,20 @@
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 &&
+python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 &&
+python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 &&
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 &&
+
+
+python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 && python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 && python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 && python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1
+
+
+
+
+
+
+
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 &&
+ python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 && 
+python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1
+
+
+python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 && python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1 && python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.25 --source cowfarmB_ch3_2022072519_016_Trim_1min.mp4 --save-txt --save-conf --device 0,1

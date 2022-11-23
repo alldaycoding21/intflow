@@ -1,0 +1,30 @@
+# train normal p5 models
+python3 train.py --device 0 --batch-size 16 --data ./yolo_cow_ver01.yaml --cfg cfg/training/yolov7.yaml --weights '' --name yolov7p5ver01 --hyp data/hyp.scratch.p5.yaml
+
+# train p6 models
+python3 train_aux.py --device 0 --batch-size 16 --data ./yolo_cow_ver01.yaml --cfg cfg/training/yolov7-w6.yaml --weights '' --name yolov7p6ver01 --hyp data/hyp.scratch.p6.yaml
+
+# train tiny models
+python3 train.py --device 0 --batch-size 16 --data ./yolo_cow_ver01.yaml --cfg cfg/training/yolov7-tiny.yaml --weights '' --name yolov7-tinyver01 --hyp data/hyp.scratch.tiny.yaml
+
+# train d6 models
+python3 train_aux.py --device 0 --batch-size 16 --data ./yolo_cow_ver01.yaml --cfg cfg/training/yolov7-d6.yaml --weights '' --name yolov7-d6ver01 --hyp data/hyp.scratch.p5.yaml
+
+# train e6 models
+python3 train_aux.py --device 0 --batch-size 16 --data ./yolo_cow_ver01.yaml --cfg cfg/training/yolov7-e6.yaml --weights '' --name yolov7-e6ver01 --hyp data/hyp.scratch.p5.yaml
+
+# train e6e models
+python3 train_aux.py --device 0 --batch-size 16 --data ./yolo_cow_ver01.yaml --cfg cfg/training/yolov7-e6e.yaml --weights '' --name yolov7-e6ever01 --hyp data/hyp.scratch.p5.yaml
+
+# train x models
+python3 train.py --device 0 --batch-size 16 --data ./yolo_cow_ver01.yaml --cfg cfg/training/yolov7x.yaml --weights '' --name yolov7xver01 --hyp data/hyp.scratch.p5.yaml
+
+
+# Inference video
+python3 detect.py --weights ./weights/yolov7_p6_ver01.pt --conf 0.25 --source cowfarmB_ch2_2022072519_010.mp4 &&
+ python3 detect.py --weights ./weights/yolov7_p6_e6e_ver01.pt --conf 0.25 --source cowfarmB_ch2_2022072519_010.mp4 &&
+ python3 detect.py --weights ./weights/yolov7_p6_e6_ver01.pt --conf 0.25 --source cowfarmB_ch2_2022072519_010.mp4 &&
+ python3 detect.py --weights ./weights/yolov7_p6_d6_ver01.pt --conf 0.25 --source cowfarmB_ch2_2022072519_010.mp4 &&
+ python3 detect.py --weights ./weights/yolov7_p5_x_ver01.pt --conf 0.25 --source cowfarmB_ch2_2022072519_010.mp4 &&
+ python3 detect.py --weights ./weights/yolov7_p5_ver01.pt --conf 0.25 --source cowfarmB_ch2_2022072519_010.mp4 &&
+ python3 detect.py --weights ./weights/yolov7_p5_tiny_ver01.pt --conf 0.25 --source cowfarmB_ch2_2022072519_010.mp4
