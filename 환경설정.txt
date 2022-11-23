@@ -1,2 +1,16 @@
 tracker01(tensorflow-gpu)
 멘토가 해준 세팅
+
+내문서 git 폴더 생성
+tracker 폴더 생성
+의영이 git clone
+
+# conda 가상환경 생성
+conda install --name tracker01 tensorflow-gpu python=3.8
+cd tracker
+clone https://github.com/inbn6619/yolov7.git
+cd yolov7
+git clone https://github.com/inbn6619/ByteTrack.git
+cd ByteTrack
+
+detect.py 실행하면서 필요한 것만 설치하는게 핵심
