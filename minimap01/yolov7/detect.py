@@ -9,6 +9,7 @@ from numpy import random
 import numpy as np
 import os
 
+
 from models.experimental import attempt_load
 from utils.datasets import LoadStreams, LoadImages
 from utils.general import check_img_size, check_requirements, check_imshow, non_max_suppression, apply_classifier, \
@@ -16,11 +17,11 @@ from utils.general import check_img_size, check_requirements, check_imshow, non_
 from utils.plots import plot_one_box, plot_one_box_tracked
 from utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
 from ByteTrack.yolox.tracker.byte_tracker import BYTETracker
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+
 
 # tracking_tail
 from utils.contrail import *
-
-os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 # Distance 거리 계산(피타고라스 정리 사선 루트 적용시켜서 제곱값을 없에줌)
 
@@ -62,8 +63,7 @@ from datetime import datetime
 
 ### 생성 됬으나 불필요 하다고 느낀 파일
 
-from utils.VariableGroup import *
-## /home/ubuntu/yolov7/Execution_detect.py
+## /home/ubuntu/yolov7/utils/VariableGroup.py
 
 
 
@@ -71,6 +71,9 @@ from utils.VariableGroup import *
 
 def detect(save_img=False):
 
+    ### 미니맵 동영상 저장 // cv2.VideoWriter(비디오저장 경로 및 이름, 비디오 코덱, 프레임, 비디오 크기(1920, 1080))
+    
+    out = cv2.VideoWriter('/home/ubuntu/yolov7/test.mp4', cv2.VideoWriter_fourcc(*'mp4v'),15, (1280, 720))
 
     ### 함수 내 변수 (Dict, Contrail 은 DP로 바꾸어서 하는게 연산 속도가 더 빠를듯)
     
@@ -81,8 +84,6 @@ def detect(save_img=False):
     result = list()
 
     contrail_dict = {}
-
-
     
     ### 전체 데이터프레임
     test = pd.DataFrame()
@@ -90,14 +91,18 @@ def detect(save_img=False):
     # fps 동영상에서 찾아서 불러오기
     tracker = BYTETracker(opt, frame_rate=15)
 
-
     ### Default 값 불러오기 (opt = parser.parse_args() : 400번대 줄)
     
-    source, weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
-    save_img = not opt.nosave and not source.endswith('.txt')  # save inference images
-    webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
+    source1, source2, source3, weights, view_img, save_txt, imgsz, trace = opt.source1, opt.source2, opt.source3, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
+    save_img1 = not opt.nosave and not source1.endswith('.txt')  # save inference images
+    webcam = source1.isnumeric() or source1.endswith('.txt') or source1.lower().startswith(
         ('rtsp://', 'rtmp://', 'http://', 'https://'))
-
+    save_img2 = not opt.nosave and not source2.endswith('.txt')  # save inference images
+    webcam = source2.isnumeric() or source2.endswith('.txt') or source2.lower().startswith(
+        ('rtsp://', 'rtmp://', 'http://', 'https://'))
+    save_img3 = not opt.nosave and not source3.endswith('.txt')  # save inference images
+    webcam = source3.isnumeric() or source3.endswith('.txt') or source3.lower().startswith(
+        ('rtsp://', 'rtmp://', 'http://', 'https://'))
 
     ### 저장 경로
     # Directories 디렉토리
@@ -126,29 +131,23 @@ def detect(save_img=False):
         modelc = load_classifier(name='resnet101', n=2)  # initialize
         modelc.load_state_dict(torch.load('weights/resnet101.pt', map_location=device)['model']).to(device).eval()
 
-
     ### 동영상 저장 할때 사용하는 코드
     # Set Dataloader
     vid_path, vid_writer = None, None
     if webcam:
         view_img = check_imshow()
         cudnn.benchmark = True  # set True to speed up constant image size inference
-        dataset = LoadStreams(source, img_size=imgsz, stride=stride)
+        dataset1 = LoadStreams(source1, img_size=imgsz, stride=stride)
+        dataset2 = LoadStreams(source2, img_size=imgsz, stride=stride)
+        dataset3 = LoadStreams(source3, img_size=imgsz, stride=stride)
     else:
-        dataset = LoadImages(source, img_size=imgsz, stride=stride)
+        dataset1 = LoadImages(source1, img_size=imgsz, stride=stride)
+        dataset2 = LoadImages(source2, img_size=imgsz, stride=stride)
+        dataset3 = LoadImages(source3, img_size=imgsz, stride=stride)
 
     # Get names and colors // 이 컬러 사용안함
     ### 원래 용도 == 클래스 당 컬러 (사람 = 빨강, 차 = 노랑 등)
     names = model.module.names if hasattr(model, 'module') else model.names
-
-
-
-    # random.seed(123)
-    # colors = [[random.randint(0, 255) for _ in range(3)] for _ in range(100)]
-    # print(colors)
-    # save_name = str(weights).replace('pt', 'csv')
-
-
 
     ### 예측 시작(트래커, 디텍션 돌아가는 곳)
     # Run inference
@@ -201,7 +200,6 @@ def detect(save_img=False):
             p = Path(p)  # to Path
             save_path = str(save_dir / p.name)  # img.jpg
             txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
-            # map_path = str(save_dir / p.stem) + '_minimap.mp4'
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
 
             ### 미니맵 이미지 생성 코드
@@ -217,20 +215,13 @@ def detect(save_img=False):
                 ## Tracker
                 tracked_targets = tracker.update(det[:, :5].cpu().numpy(), im0.shape)
 
-                ## Overlay
-                # for bbox in tracked_targets:
-                #     plot_one_box_tracked(bbox, im0)
-
-                ### rawdata == dict으로 Distance 구하려고 만들었던 코드 // 수정필요 할듯
-                rawdata = pd.DataFrame()
-
+            
+                ### 프레임 전송 시간 코드
+                realtime = datetime.now()
 
                 ### 바운딩박스, 미니맵, DB 생성 코드
                 for num in range(len(tracked_targets)):
                     
-                    # contrail list 생성 및 초기화용
-                    temp_list = list()
-
                     ### Distance 생성 코드
                     travel_distance = 0
 
@@ -239,7 +230,6 @@ def detect(save_img=False):
                     yc = ym + (yM - ym) / 2
                     corrected_xc, corrected_yc = pm1.pixel_to_lonlat((xc, yc))[0]
                     
-                    # nowdict[str(tracked_targets[num].track_id)] = [xc, yc]
                     nowdict[str(tracked_targets[num].track_id)] = [corrected_xc, corrected_yc]
 
                     ### Distance 전 프레임과 현재 프레임의 Track_id가 같은 것을 찾아주는 코드
@@ -253,27 +243,6 @@ def detect(save_img=False):
                         ### Distance 오차값 선정 코드
                         if travel_distance <= 20:
                             travel_distance = 0
-
-
-                        # else:
-                        #     print(int(travel_distance))
-                    
-                    ### travel_distance
-                    # tlbr = list(map(int, tracked_targets[num].tlbr))
-                    # center = np.array([tlbr[0] + (tlbr[2] - tlbr[0]) // 2, tlbr[1] + (tlbr[3] - tlbr[1]) // 2])
-                    # past_tlbr = test['tlbr'].iloc[-1]
-                    # if past_tlbr:
-                    #     past_center = np.array([past_tlbr[0] + (past_tlbr[2] - past_tlbr[0]) // 2, past_tlbr[1] + (past_tlbr[3] - past_tlbr[1]) // 2])
-                    #     travel_distance = math.sqrt(list(center - past_center)[0] * list(center - past_center)[0] + list(center - past_center)[1] * list(center - past_center)[1])
-                    # else:
-                    #     travel_distance = 0
-
-                    # if travel_distance == 0:
-                    #     pass
-                    # else:
-                    #     if travel_distance <= 50:
-                    #         travel_distance = 0
-
 
                     ### 식사량, 음수량은 Points in Polygon을 사용하여 해당 Dot이 Polygon(다각형)내에 있는지 판별 후
                     ### 있다면 1, 없다면 0의 값을 전송
@@ -294,9 +263,6 @@ def detect(save_img=False):
                         water_intake = 0
                     
 
-                    ### 프레임 전송 시간 코드 // 각 프레임당 시간이 나오는 것이 아닌 프레임 내의 객체의 시간을 나타냄
-                    ### 프레임 당 시간으로 만들어 줄거라면 위의 for num in range(len(tracked_targets)): 위에 코드를 올려놓으면 될듯
-                    realtime = datetime.now()
 
                     ## 박스 및 미니맵 생성
                     
@@ -334,28 +300,9 @@ def detect(save_img=False):
                         'water',
                         'time'
                         ]
-                    
-                    
 
-                    ### Distance 전 프레임과 현재 프레임의 Track_id가 같은 것을 찾아주는 코드
-                    # if str(tracked_targets[num].track_id) in pastdict.keys():
-
-                    # ### 전프레임과 현프레임의 Center 값의 차이를 구해 Center의 이동거리(삼각형)을 구하고 제곱된 값을 Root를 씌워 Distance로 바꿔주는 코드
-                    #     center = [
-                    #             x-y for x,
-                    #             y in zip(
-                    #                 nowdict[str(tracked_targets[num].track_id)],
-                    #                 pastdict[str(tracked_targets[num].track_id)]
-                    #                 )
-                    #             ]
-                    #     travel_distance = math.sqrt(center[0] ** 2 + center[1] ** 2)
+                
                     
-                    # # nowdict[str(tracked_targets[num].track_id)] = [xc, yc]
-                    # nowdict[str(tracked_targets[num].track_id)] = [corrected_xc, corrected_yc]
-               
-                    
-
-
                     # num번째 소 track_id
                     num_track_id = tracked_targets[num].track_id
 
@@ -370,13 +317,9 @@ def detect(save_img=False):
                         contrail_dict[num_track_id].appendleft((int(xc), int(yc)))
                     
 
-                    
-
-                    
 
                     df = pd.DataFrame([data], columns=columns).set_index('origin_frame')
-                    ### 전 프레임의 값을 저장해 주는 코드인데 필요성이 없을듯?
-                    rawdata = pd.concat([rawdata, df])
+                    test = pd.concat([test, df])
 
                 ### Distance 값을 위해 현프레임의 좌표를 과거 프레임 변수에 옮기고 현프레임은 초기화 하는 코드
 
@@ -386,40 +329,11 @@ def detect(save_img=False):
                 
                 nowdict = dict()
 
-                ### 한 프레임이 끝났다면 해당 프레임 전체를 test(DataFrame)에 합쳐서 하나의 데이터프레임으로 만들어 주는 코드
-
-                test = pd.concat([test, rawdata])
 
                 ### 각 프레임당 CV2로 추가된 미니맵 이미지를 저장해주는 코드
                 result.append(canvas)
-
-                
-
-
-                # # Print results
-                # for c in det[:, -1].unique():
-                #     n = (det[:, -1] == c).sum()  # detections per class
-                #     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
-
-                # Write results
-                # for *xyxy, conf, cls in reversed(det):
-                #     if save_txt:  # Write to file
-                #         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                #         line = (cls, *xywh, conf) if opt.save_conf else (cls, *xywh)  # label format
-                #         with open(txt_path + '.txt', 'a') as f:
-                #             f.write(('%g ' * len(line)).rstrip() % line + '\n')
-                # print(weights)
-                # print(save_name)
-                    # if save_img or view_img:  # Add bbox to image
-                    #     label = f'{names[int(cls)]} {conf:.2f}'
-                    #     # 박스 치는 곳
-                    #     plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
-
-
-
-            ### 디텍션 실패 했을때 뜨는 코드 // 없어도됨
-            else:
-                print('can not detect cow :', frame)
+                out.write(result[-1])
+                print('test : ', len(result))
 
 
 
@@ -450,9 +364,7 @@ def detect(save_img=False):
                             fps, w, h = 30, im0.shape[1], im0.shape[0]
                             save_path += '.mp4'
                         vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
-                        # map_writer = cv2.VideoWriter(map_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer.write(im0)
-                    # map_writer.write(canvas)
 
     if save_txt or save_img:
         s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
@@ -464,15 +376,12 @@ def detect(save_img=False):
 
     test.to_csv('p6_e6e_test' + '.csv', index = True)
 
-    ### 미니맵 동영상 저장 // DB에 전송할때 수정이 필수
-
-    out = cv2.VideoWriter('/home/ubuntu/yolov7/test.mp4', cv2.VideoWriter_fourcc(*'mp4v'),15, (1280, 720))
-
-    for i in range(len(result)):
-        out.write(result[i])
-        print('test :', i)
-    out.release()
-
+    
+    ### release() == 선언된 변수에게 데이터 그만 보내라는 함수
+    ### 사용 이유 : https://kali-live.tistory.com/8
+    # out.release()
+    
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
 
 
 
@@ -480,11 +389,13 @@ def detect(save_img=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default='C:/Users/ai/Documents/intflow/weights/yolov7_p5_tiny_ver01.pt', help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='C:/Users/ai/Documents/intflow/videos/cowfarmB_ch3_2022072519_016.mp4', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--source1', type=str, default='C:/Users/ai/Documents/intflow/videos/sample/ch1_5sec.mp4', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--source2', type=str, default='C:/Users/ai/Documents/intflow/videos/sample/ch2_5sec.mp4', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--source3', type=str, default='C:/Users/ai/Documents/intflow/videos/sample/ch3_5sec.mp4', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')
-    parser.add_argument('--device', default='0', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--device', default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--view-img', action='store_true', help='display results')
     parser.add_argument('--save-txt', action='store_true', default=True, help='save results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
@@ -517,3 +428,37 @@ if __name__ == '__main__':
                 strip_optimizer(opt.weights)
         else:
             detect()
+
+
+
+
+
+
+
+
+
+
+                ## Overlay
+                # for bbox in tracked_targets:
+                #     plot_one_box_tracked(bbox, im0)
+
+
+
+                # # Print results
+                # for c in det[:, -1].unique():
+                #     n = (det[:, -1] == c).sum()  # detections per class
+                #     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
+
+                # Write results
+                # for *xyxy, conf, cls in reversed(det):
+                #     if save_txt:  # Write to file
+                #         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
+                #         line = (cls, *xywh, conf) if opt.save_conf else (cls, *xywh)  # label format
+                #         with open(txt_path + '.txt', 'a') as f:
+                #             f.write(('%g ' * len(line)).rstrip() % line + '\n')
+                # print(weights)
+                # print(save_name)
+                    # if save_img or view_img:  # Add bbox to image
+                    #     label = f'{names[int(cls)]} {conf:.2f}'
+                    #     # 박스 치는 곳
+                    #     plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)

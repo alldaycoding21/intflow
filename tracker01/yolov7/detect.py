@@ -3,8 +3,6 @@ import time
 from pathlib import Path
 import os
 
-
-
 import cv2
 import torch
 import torch.backends.cudnn as cudnn
@@ -75,6 +73,12 @@ def detect(save_img=False):
     old_img_b = 1
 
     t0 = time.time()
+
+    # file open
+    txt_file = open('C:/Users/ai/Documents/intflow/tracker01/example.txt', 'w')
+    video_frame = 0
+    txt_file.write("video_frame,ch,xmin,ymin,xmax,ymax,conf,xc,xy\n")
+
     for path, img, im0s, vid_cap in dataset:
         img = torch.from_numpy(img).to(device)
         img = img.half() if half else img.float()  # uint8 to fp16/32
@@ -105,9 +109,17 @@ def detect(save_img=False):
         # Apply Classifier
         if classify:
             pred = apply_classifier(pred, modelc, img, im0s)
+        
+
 
         # Process detections
         for i, det in enumerate(pred):  # detections per image
+
+            if len(det) < 1:
+                continue
+            
+                # txt_file.write("video_frame,ch,0xmin,1ymin,2xmax,3ymax,4conf,xc,xy\n")
+
             if webcam:  # batch_size >= 1
                 p, s, im0, frame = path[i], '%g: ' % i, im0s[i].copy(), dataset.count
             else:
@@ -121,6 +133,14 @@ def detect(save_img=False):
                 # Rescale boxes from img_size to im0 size
                 det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
 
+                for obj in det:
+
+                    xc=(obj[2]+obj[0])/2
+                    yc=(obj[3]+obj[1])/2
+
+                    ### 좌표 텍스트에 쓰기
+                    txt_file.write(f"{video_frame},ch3,{obj[0]},{obj[1]},{obj[2]},{obj[3]},{obj[4]},{xc},{yc}\n")
+
                 ## Tracker
                 tracked_targets = tracker.update(det[:, :5].cpu().numpy(), im0.shape)
 
@@ -128,31 +148,8 @@ def detect(save_img=False):
                 for bbox in tracked_targets:
                     plot_one_box_tracked(bbox, im0)
 
-                # # Print results
-                # for c in det[:, -1].unique():
-                #     n = (det[:, -1] == c).sum()  # detections per class
-                #     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
-
-                # # Write results
-                # for *xyxy, conf, cls in reversed(det):
-                #     if save_txt:  # Write to file
-                #         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                #         line = (cls, *xywh, conf) if opt.save_conf else (cls, *xywh)  # label format
-                #         with open(txt_path + '.txt', 'a') as f:
-                #             f.write(('%g ' * len(line)).rstrip() % line + '\n')
-
-                #     if save_img or view_img:  # Add bbox to image
-                #         label = f'{names[int(cls)]} {conf:.2f}'
-                #         # 박스 치는 곳
-                #         plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
-
             # Print time (inference + NMS)
             print(f'{s}Done. ({(1E3 * (t2 - t1)):.1f}ms) Inference, ({(1E3 * (t3 - t2)):.1f}ms) NMS')
-
-            # Stream results
-            if view_img:
-                cv2.imshow(str(p), im0)
-                cv2.waitKey(1)  # 1 millisecond
 
             # Save results (image with detections)
             if save_img:
@@ -164,6 +161,7 @@ def detect(save_img=False):
                         vid_path = save_path
                         if isinstance(vid_writer, cv2.VideoWriter):
                             vid_writer.release()  # release previous video writer
+                            txt_file.close()
                         if vid_cap:  # video
                             fps = vid_cap.get(cv2.CAP_PROP_FPS)
                             w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -173,18 +171,22 @@ def detect(save_img=False):
                             save_path += '.mp4'
                         vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer.write(im0)
-
-    if save_txt or save_img:
-        s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
-        #print(f"Results saved to {save_dir}{s}")
+        
+        video_frame += 1
+    # if save_txt or save_img:
+    #     s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
+    #     #print(f"Results saved to {save_dir}{s}")
 
     print(f'Done. ({time.time() - t0:.3f}s)')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='C:/Users/ai/Documents/intflow/weights/yolov7_p5_tiny_ver01.pt', help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='C:/Users/ai/Documents/intflow/videos/b_ch3_10sec_sample.mp4', help='source')  # file/folder, 0 for webcam
+    # parser.add_argument('--weights', nargs='+', type=str, default='C:/Users/ai/Documents/intflow/tracker01/yolov7/weights/yolov7_p6_e6e_ver01.pt', help='model.pt path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default='C:/Users/ai/Documents/intflow/tracker01/yolov7/weights/yolov7_p6_e6_ver01.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='C:/Users/ai/Documents/intflow/tracker01/yolov7/weights/yolov7_p5_tiny_ver01.pt', help='model.pt path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default='C:/Users/ai/Documents/intflow/tracker01/yolov7/weights/yolov7_p5_x_ver01.pt', help='model.pt path(s)')
+    parser.add_argument('--source', type=str, default='C:/Users/ai/Documents/intflow/tracker01/yolov7/videos/3ch_video/ch3-1.mp4', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')

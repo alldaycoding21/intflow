@@ -1,6 +1,8 @@
 // EC2 env
 
 	sudo apt update -y
+	
+	sudo apt install python3-pip
 
 	git clone https://github.com/inbn6619/yolov7.git
 
@@ -9,16 +11,10 @@
 	git clone https://github.com/inbn6619/ByteTrack.git
 
 	cd ByteTrack
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 	
+
 	sudo apt install python3-pip -y
->>>>>>> 02f7433d0a3bb26c823e0c1f93a93bec909d6927
-=======
-	
-	sudo apt install python3-pip -y
->>>>>>> 02f7433d0a3bb26c823e0c1f93a93bec909d6927
 
 	sudo pip3 install -r requirements.txt
 
@@ -65,6 +61,8 @@
 	sudo apt-get -y install libgl1-mesa-glx
 	or
 	sudo pip3 install opencv-python-headless
+	
+	sudo pip3 install -r requirements.txt
 
 
 

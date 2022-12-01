@@ -187,7 +187,13 @@ class BYTETracker(object):
         inds_second = np.logical_and(inds_low, inds_high)
         dets_second = bboxes[inds_second]
         checkpoint = bboxes[remain_inds]
+
+
+
+        ### Points in Polygon으로 판단 한 결과 값을 기준으로 디텍션 한 결과를 제한하는 코드
         dets = checkpoint[limited_area(checkpoint, poly)]
+
+
         scores_keep = scores[remain_inds]
         scores_second = scores[inds_second]
 
